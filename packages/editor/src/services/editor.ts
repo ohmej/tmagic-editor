@@ -500,6 +500,14 @@ class Editor extends BaseService {
       this.resetModifiedNodeId();
       historyService.reset();
     }
+
+    // 删除组件后，刷新编辑器中的runtime页面。
+    // 避免问题：选择弹框组件未展示
+    this.get('stage')?.update({
+      config: cloneDeep(this.get('node')),
+      parentId: this.get('page')?.id,
+      root: cloneDeep(this.get('root') ?? {}),
+    } as any);
   }
 
   /**
